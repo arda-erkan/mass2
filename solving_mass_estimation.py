@@ -34,7 +34,6 @@ for i in range(len(K)):
     mu_data = np.exp(mu_log)
     mu_tilde.append(mu_data)
 mu_tilde_data = pd.Series(mu_tilde)
-mu_tilde_data.to_csv("mu_tilde.csv")
 
 planet_list = []
 for i in range(len(gamma)):
@@ -42,8 +41,6 @@ for i in range(len(gamma)):
     planet_max_mu = (1+gamma[i])**(-1) * mu_tilde[i]
     planet_list.append(planet_min_mu)
     planet_list.append(planet_max_mu)
-
-np.savetxt("planet_mu.csv", planet_list, delimiter=",", fmt="%s")
 
 planet_list_log = np.log(planet_list)
 

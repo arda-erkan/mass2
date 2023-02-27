@@ -21,8 +21,6 @@ for i in range (0,len(datafile)-1):
     planet_masses_list.append(m)
 planet_masses = pd.Series(planet_masses_list)
 
-pd.Series.to_csv(planet_masses, "a.csv")
-
 star_masses = datafile["st_mass"] 
 semi_major_axes = datafile["pl_orbsmax"] 
 
