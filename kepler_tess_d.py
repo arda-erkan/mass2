@@ -4,7 +4,7 @@ import numpy as np
 from scipy import stats
 import seaborn as sns
 
-plt.rcParams.update({'font.size': 9})
+plt.rcParams.update({'font.size': 8})
 
 filename = "a_total.csv"
 datafile = pd.read_csv(filename, skiprows=60)
@@ -26,7 +26,9 @@ x = np.linspace(np.min(w), np.max(w), 871)
 
 plt.figure(1, figsize=(3.5, 4.5))
 plt.hist(w, density=True, bins=27, histtype="step", color="grey")
-plt.plot(x,stats.norm.pdf(x, mean, std), color=sns.color_palette('Set2')[0])
-plt.xlabel("log D")
-plt.ylabel("")
+plt.plot(x,stats.norm.pdf(x, mean, std), color=sns.color_palette('deep')[4])
+plt.xlabel("Orbital Spacing")
+plt.ylabel("Density")
+plt.xlim(-2.5, 1)
+plt.xticks(range(-2,2))
 plt.show()

@@ -5,7 +5,7 @@ import astropy.constants as const
 from scipy import stats
 import seaborn as sns
 
-plt.rcParams.update({'font.size': 9})
+plt.rcParams.update({'font.size': 8})
 
 filename = "a_total.csv"
 datafile = pd.read_csv(filename, skiprows=60)
@@ -28,17 +28,11 @@ logK = np.log(K_data)
 [mean, std] = stats.norm.fit(logK)
 x = np.linspace(np.min(logK), np.max(logK), 1035)
 
-plt.figure(2, figsize=(7.2, 4.5))
-
-plt.subplot(1, 2, 1)
-plt.hist(K_data, density=True, bins=70, histtype="step", color="grey")
-plt.xlabel ("K")
-plt.ylabel ("")
-
-plt.subplot(1,2,2)
+plt.figure(2, figsize=(3.5,4.5))
 plt.hist(logK,density=True, bins=70, histtype="step", color="grey")
-plt.plot(x, stats.norm.pdf(x, mean, std), color=sns.color_palette('Set2')[0])
-plt.xlabel ("logK")
+plt.plot(x, stats.norm.pdf(x, mean, std), color=sns.color_palette('deep')[4])
+plt.xlabel("Orbital Separation (Mutual Hill Radius)")
+plt.ylabel("Density")
 plt.show()
 
 print(np.mean(logK))

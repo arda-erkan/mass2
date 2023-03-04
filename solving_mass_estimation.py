@@ -5,15 +5,14 @@ from scipy import stats as scp
 import seaborn as sns
 import astropy.constants as const
 
-plt.rcParams.update({'font.size': 9})
+plt.rcParams.update({'font.size': 8})
 
 #K-calculation
-
 K = scp.norm.rvs(size=1129, loc=1.32, scale=0.31)
 print(len(K))
+K_log = np.log(K)
 
 #gamma-calculation
-
 gamma = []
 a = 0
 while a != 1129:
@@ -25,8 +24,6 @@ while a != 1129:
 logD_dataframe = pd.read_csv("logD.csv")
 logD_series = logD_dataframe.squeeze()
 logD = logD_series.values.tolist()
-
-K_log = np.log(K)
 
 mu_tilde = []
 for i in range(len(K)):
@@ -41,7 +38,6 @@ for i in range(len(gamma)):
     planet_max_mu = (1+gamma[i])**(-1) * mu_tilde[i]
     planet_list.append(planet_min_mu)
     planet_list.append(planet_max_mu)
-
 planet_list_log = np.log(planet_list)
 
 datafile = pd.read_csv("a_total.csv", skiprows=60)
@@ -85,21 +81,21 @@ z = np.linspace(np.min(K_log), np.max(K_log), 1129)
 tmass_lin = np.linspace(np.min(t_mu_log), np.max(t_mu_log), 2061)
 emass_lin = np.linspace(np.min(e_mu_log), np.max(e_mu_log), 2061)
 
-plt.figure(1)
-plt.subplot(2,1,1)
+plt.figure(1, figsize=(7.2, 4.5))
 #experimental mass plot
-plt.plot(emass_lin, scp.norm.pdf(emass_lin, loc=mean_fit_emass, scale=std_fit_emass), color=sns.color_palette('Set2')[0], label="Exp Mu")
+plt.plot(emass_lin, scp.norm.pdf(emass_lin, loc=mean_fit_emass, scale=std_fit_emass), color=sns.color_palette('Set2')[0], label="NASA Archive")
 #malhotra mass plot
-plt.plot(x, scp.norm.pdf(x, loc=mean_fit_pla, scale=std_fit_pla), color=sns.color_palette('Set2')[2], label="Malhotra Mu")
+plt.plot(x, scp.norm.pdf(x, loc=mean_fit_pla, scale=std_fit_pla), color=sns.color_palette('Set2')[2], label="Malhotra")
 #new article mass plot
-plt.plot(tmass_lin, scp.norm.pdf(tmass_lin, loc=mean_fit_tmass, scale=std_fit_tmass), color=sns.color_palette('Set2')[6], label="New Article Mu")
-plt.title("Prob Density of Mu")
+plt.plot(tmass_lin, scp.norm.pdf(tmass_lin, loc=mean_fit_tmass, scale=std_fit_tmass), color=sns.color_palette('Set2')[6], label="Otegi et al.")
 plt.legend()
-plt.xlabel("log_mu")
-plt.ylabel("PDF(log_mu)")
-plt.subplot(2,1,2)
-plt.scatter(e_mu_series,diff_series,color=sns.color_palette('Set2')[0],s=7, label="Theoretical - Experimental")
-plt.xlabel("Experimental Mu")
+plt.xlabel("log\u03BC")
+plt.ylabel("PDF(log\u03BC)")
+plt.figure(2, figsize=(7.2, 4.5))
+plt.scatter(e_mu_series,diff_series,color=sns.color_palette('Set2')[0], s=6)
+plt.xlabel("NASA Archive \u03BC")
+plt.xlim(right=0.025)
 plt.ylabel("Difference of Data")
+
 plt.legend()
 plt.show()

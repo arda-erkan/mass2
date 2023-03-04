@@ -5,7 +5,7 @@ import astropy.constants as const
 import astropy.units as u
 from scipy import stats
 
-plt.rcParams.update({'font.size': 9})
+plt.rcParams.update({'font.size': 8})
 
 filename = "a_total.csv"
 datafile = pd.read_csv(filename, skiprows=60)
@@ -29,12 +29,13 @@ for i in range(0,len(datafile)-1):
         hill_list.append(hill_radius)
 hill_data = pd.Series(hill_list)
 hill_data = hill_data.dropna()
+hill_data = np.log(hill_data)
 
 plt.figure(3, figsize=(3.5,4.5))
-plt.hist(hill_data, bins=1000, histtype="step", color="grey")
-plt.xlim([0,2])
-plt.xlabel("Mutual Hill Radius")
-plt.ylabel("Number")
+plt.hist(hill_data, bins=100, histtype="step", color="grey")
+plt.xlabel("Mutual Hill Sphere Radius (AU)")
+plt.ylabel("Density")
+plt.xlim(right=0)
 plt.show()
 
 
